@@ -15,6 +15,9 @@ const mouse = {
   click: false,
 };
 
+const themeMusic = document.createElement("audio");
+themeMusic.src = "theme_music1.mp3";
+
 canvas.addEventListener("mousedown", function (event) {
   mouse.x = event.x - canvasPosition.left;
   mouse.y = event.y - canvasPosition.top;
@@ -97,6 +100,8 @@ class Bubble {
   }
 }
 
+
+
 const bubblePlop = document.createElement("audio");
 bubblePlop.src = "Plop.ogg";
 
@@ -113,7 +118,7 @@ function handleBubbles() {
     bubblesArray[i].draw();
   }
 
-  for (let i = bubblesArray.length - 1; i >= 0; i--) {
+  for (let i = 0; i < bubblesArray.length; i++) {
     if (bubblesArray[i].y < 0 - bubblesArray[i].radius * 2) {
       bubblesArray.splice(i, 1);
     }
@@ -124,6 +129,7 @@ function handleBubbles() {
         } else {
           bubbleSingle.play();
         }
+        themeMusic.play();
         score++;
         bubblesArray[i].counted = true;
         bubblesArray.splice(i, 1);
@@ -133,6 +139,7 @@ function handleBubbles() {
 }
 
 function animate() {
+  
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   handleBubbles();
   player.update();
@@ -141,6 +148,7 @@ function animate() {
   ctx.fillText("score: " + score, 10, 50);
   gameFrame++;
   requestAnimationFrame(animate);
+  
 }
 
 animate();
